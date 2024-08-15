@@ -16,10 +16,10 @@ var game = {
 			}
 	},
 	sounds: {
-		jump: new Audio('sounds/jump.wav')
+		jump: new Audio('/sounds/jump.wav')
 	},
 	options: {
-		texturesPath: "textures1.png",
+		texturesPath: "/textures1.png",
 		tileWidth: 24,
 		tileHeight: 24,
 		canvasWidth: window.innerWidth / 3,
@@ -31,8 +31,8 @@ var game = {
 		this.canvas.height = this.options.canvasHeight
 		this.context.imageSmoothingEnabled = false
 
-    this.backgrounds['sky'].image.src = "background1.png"
-		this.backgrounds['trees'].image.src = "newbg.png"
+    this.backgrounds['sky'].image.src = "/background1.png"
+		this.backgrounds['trees'].image.src = "/newbg.png"
 
 		for (var key in this.backgrounds) {
 			this.backgrounds[key].image.onload = function (currentKey) {
