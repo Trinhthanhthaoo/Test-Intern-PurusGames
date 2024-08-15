@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <title>The Melon Man</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="shortcut icon" href="/T.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-xgT2G0n8VX9oFg3J+zJo/ZYv8y4YJ6S0d5Ni1jA6dFikj4hG1tFjFY5O1RfbRzFf" crossorigin="anonymous">
+    <style>
+        /* Ẩn thanh điều khiển âm thanh */
+        audio {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="game">
@@ -17,12 +23,11 @@
             <button class="mobileControls__button" onmousedown="game.jump()" ontouchstart="game.jump()">Jump</button>
         </div>
         <p class="counter" id="counter">Score: 0</p>
-       <div class="music-control">
-  <button id="musicToggle">
-    <img src="/music1.jpg" alt="Music Control" id="musicIcon">
-  </button>
-</div>
-
+        <div class="music-control">
+            <button id="musicToggle">
+                <img src="/music1.png" alt="Music Control" id="musicIcon">
+            </button>
+        </div>
     </div>
     <script src="/js/index.js"></script>
     <script src="/js/player.js"></script>
@@ -34,7 +39,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const musicControlButton = document.getElementById('musicToggle');
             const musicIcon = document.getElementById('musicIcon');
-            const music = document.querySelector('audio');
+            const music = document.getElementById('musicElement');
 
             // Đặt trạng thái nhạc mặc định
             let musicPlaying = true;
@@ -43,12 +48,10 @@
             function toggleMusic() {
                 if (musicPlaying) {
                     music.pause();
-                    musicIcon.classList.remove('fa-volume-high');
-                    musicIcon.classList.add('fa-volume-xmark'); // Thay đổi icon khi nhạc tắt
+                    musicIcon.src = '/music1.png'; // Cập nhật ảnh khi nhạc tắt
                 } else {
                     music.play();
-                    musicIcon.classList.remove('fa-volume-xmark');
-                    musicIcon.classList.add('fa-volume-high'); // Thay đổi icon khi nhạc bật
+                    musicIcon.src = '/music2.jpg'; // Cập nhật ảnh khi nhạc bật
                 }
                 musicPlaying = !musicPlaying;
             }
@@ -73,8 +76,8 @@
             game.requestRedraw();
         });
     </script>
-    <audio controls loop autoplay hidden>
-        <source src="/sounds/music.mp3" type="/audio/mpeg">
+    <audio id="musicElement" loop autoplay>
+        <source src="/sounds/music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 </body>
