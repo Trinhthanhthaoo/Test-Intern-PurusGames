@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Melon Man</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="log.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-xgT2G0n8VX9oFg3J+zJo/ZYv8y4YJ6S0d5Ni1jA6dFikj4hG1tFjFY5O1RfbRzFf" crossorigin="anonymous">
+</head>
+<body>
+    <div class="game">
+        <canvas id="canvas"></canvas>
+        <div class="mobileControls">
+            <button class="mobileControls__button" onmousedown="game.moveLeft()" ontouchstart="game.moveLeft()" onmouseup="game.stopMove()" ontouchend="game.stopMove()">Left</button>
+            <button class="mobileControls__button" onmousedown="game.moveRight()" ontouchstart="game.moveRight()" onmouseup="game.stopMove()" ontouchend="game.stopMove()">Right</button>
+            <button class="mobileControls__button" onmousedown="game.jump()" ontouchstart="game.jump()">Jump</button>
+        </div>
+        <p class="counter" id="counter">Score: 0</p>
+       <div class="music-control">
+  <button id="musicToggle">
+    <img src="music1.jpg" alt="Music Control" id="musicIcon">
+  </button>
+</div>
+
+    </div>
+    <script src="js/index.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/keyboard.js"></script>
+    <script src="js/drawing.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/collisionDetection.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const musicControlButton = document.getElementById('musicToggle');
+            const musicIcon = document.getElementById('musicIcon');
+            const music = document.querySelector('audio');
+
+            // Đặt trạng thái nhạc mặc định
+            let musicPlaying = true;
+
+            // Hàm để bật/tắt nhạc
+            function toggleMusic() {
+                if (musicPlaying) {
+                    music.pause();
+                    musicIcon.classList.remove('fa-volume-high');
+                    musicIcon.classList.add('fa-volume-xmark'); // Thay đổi icon khi nhạc tắt
+                } else {
+                    music.play();
+                    musicIcon.classList.remove('fa-volume-xmark');
+                    musicIcon.classList.add('fa-volume-high'); // Thay đổi icon khi nhạc bật
+                }
+                musicPlaying = !musicPlaying;
+            }
+
+            // Thêm sự kiện click vào nút điều khiển nhạc
+            musicControlButton.addEventListener('click', toggleMusic);
+        });
+
+        // Event listeners
+        document.addEventListener("keydown", game.keydown.bind(game), false);
+        document.addEventListener("keyup", game.keyup.bind(game), false);
+        document.body.onresize = function () {
+            game.options.canvasWidth = window.innerWidth / 3;
+            game.options.canvasHeight = window.innerHeight / 3;
+            game.canvas.width = game.options.canvasWidth;
+            game.canvas.height = game.options.canvasHeight;
+            game.requestRedraw();
+        };
+
+        game.init(function () {
+            game.generateMap();
+            game.requestRedraw();
+        });
+    </script>
+    <audio controls loop autoplay hidden>
+        <source src="sounds/music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+</html>
